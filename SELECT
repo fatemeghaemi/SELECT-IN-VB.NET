@@ -1,0 +1,35 @@
+Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Try
+            If Not IsPostBack Then
+
+                BindGroups()
+            End If
+
+            If Not Request("PeriodNum") Is Nothing Then
+                With _CLSLMSPeriod
+                    Dim DT As New DataTable
+                    DT = .SELECTS(Request("PeriodNum"))
+
+                    DLPeriodType.SelectedValue = DT.Rows(0).Item("PeriodType")
+                    DLTeacherNum.Value = DT.Rows(0).Item("TeacherNum")
+                    DLPlaceNum.SelectedValue = DT.Rows(0).Item("PlaceNum")
+                    DLGroupNum.SelectedValue = DT.Rows(0).Item("GroupNum")
+                    TBPeriodName.Text = DT.Rows(0).Item("PeriodName")
+                    TBStartDate.SelectedDateTime = DT.Rows(0).Item("StartDate")
+                    TBEndDate.SelectedDateTime = DT.Rows(0).Item("EndDate")
+                    TBCapacity.Text = DT.Rows(0).Item("Capacity")
+                    TBTeacherPercent.Text = DT.Rows(0).Item("TeacherPercent")
+                    TBPrice.Text = DT.Rows(0).Item("Price")
+                    RBPriceType.SelectedIndex = DT.Rows(0).Item("PriceType")
+                    TBSessionCount.Text = DT.Rows(0).Item("SessionCount")
+
+                End With
+            End If
+
+
+        Catch ex As Exception
+            _ClsSiteError.INSERT("LMSPeriod", ex.ToString)
+
+        End Try
+    End Sub
+End Class

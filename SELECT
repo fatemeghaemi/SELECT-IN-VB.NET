@@ -33,3 +33,34 @@ Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Han
         End Try
     End Sub
 End Class
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+ Public Function SELECTS(ByVal IdentityValue As Integer) As DataTable
+        Try
+            Dim DT As New DataTable
+            Dim _ClsUtility As New ClsUtility
+            DT = SqlHelper.ExecuteDataTable(_Scon, CommandType.StoredProcedure, "LMSPeriod_Select", New SqlParameter("PeriodNum", IdentityValue))
+            If _Scon.State = ConnectionState.Open Then _Scon.Close()
+            'Me.PeriodNum = DT.Rows(0).Item("PeriodNum")
+            'Me.TeacherNum = DT.Rows(0).Item("TeacherNum")
+            'Me.PlaceNum = DT.Rows(0).Item("PlaceNum")
+            'Me.PeriodName = DT.Rows(0).Item("PeriodName")
+            'Me.Capacity = DT.Rows(0).Item("Capacity")
+            'Me.StartDate = DT.Rows(0).Item("StartDate")
+            'Me.EndDate = DT.Rows(0).Item("EndDate")
+            'Me.TeacherPercent = DT.Rows(0).Item("TeacherPercent")
+            'Me.Price = DT.Rows(0).Item("Price")
+            'Me.SessionCount = DT.Rows(0).Item("SessionCount")
+            'Me.GroupNum = DT.Rows(0).Item("GroupNum")
+            Return DT
+        Catch ex As Exception
+            Dim _ClsSiteError As New ClsSiteError : _ClsSiteError.INSERT("CLSLMSPeriod", ex.ToString)
+
+        End Try
+
+
+    End Function
